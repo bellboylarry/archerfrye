@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Archer Frye — A Voice for the Voiceless</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap" />
+  <style>
+    :root{
+      --ink:#0b0e13;
+      --paper:#f3f5f8;
+      --dim:#94a0b0;
+      --mist:#c6d0dc;
+      --accent:#7fb2ff;        /* modern electric ice-blue */
+      --accent-soft:#a9cbff;
+      --line:rgba(243,245,248,.16);
+      --line-2:rgba(243,245,248,.07);
+      --disp:'Bricolage Grotesque',system-ui,sans-serif;
+      --mono:'IBM Plex Mono',ui-monospace,monospace;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;height:100%;}
+    body{
+      background:var(--ink);color:var(--paper);font-family:var(--disp);
+      min-height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased;position:relative;
+    }
+    a{color:inherit;text-decoration:none;}
+
+    /* ===== video background ===== */
+    .bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#05070a;}
+    .bg video{
+      position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;
+      width:auto;height:auto;transform:translate(-50%,-50%);object-fit:cover;
+      filter:saturate(1.02) contrast(1.04) brightness(1.62);
+    }
+    /* cool tonal grade for legibility around the knockout */
+    .bg::after{
+      content:'';position:absolute;inset:0;
+      background:
+        radial-gradient(58% 48% at 50% 46%, rgba(8,10,15,.62), transparent 72%),
+        linear-gradient(180deg, rgba(11,14,19,.5) 0%, rgba(11,14,19,.16) 24%, rgba(11,14,19,.3) 58%, rgba(11,14,19,.78) 82%, rgba(11,14,19,.96) 100%),
+        radial-gradient(70% 55% at 50% 44%, rgba(127,178,255,.1), transparent 60%);
+    }
+    .grain{
+      position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.4;mix-blend-mode:overlay;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    }
+
+    /* ===== knockout headline ===== */
+    /* an SVG scrim covers the hero; the giant text punches holes so the
+       video plays through the letters at full brightness */
+    .knockout{position:fixed;inset:0;z-index:5;pointer-events:none;}
+    .knockout .kotext{
+      font-family:var(--disp);font-weight:700;text-transform:uppercase;
+      letter-spacing:.01em;
+    }
+
+    /* ===== shell ===== */
+    .shell{position:relative;z-index:10;height:100vh;display:flex;flex-direction:column;padding:30px clamp(26px,5vw,68px) 34px;}
+
+    /* top bar */
+    .top{display:flex;align-items:center;justify-content:space-between;}
+    .wordmark{display:inline-flex;align-items:center;gap:11px;font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--paper);}
+    .wordmark .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2.4s ease-in-out infinite;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.7);}}
+    .pill{
+      font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
+      background:var(--accent);padding:11px 20px;border-radius:999px;font-weight:500;
+      transition:filter .2s,transform .15s;
+    }
+    .pill:hover{filter:brightness(1.08);} .pill:active{transform:translateY(1px);}
+
+    /* notify popover */
+    .notify{position:relative;}
+    .notify-pop{
+      position:absolute;top:calc(100% + 12px);right:0;width:310px;max-width:78vw;
+      background:linear-gradient(180deg, rgba(243,245,248,.08), rgba(243,245,248,.03));
+      border:1px solid var(--line);border-radius:14px;padding:16px 16px 13px;
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      box-shadow:0 26px 60px -20px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.05);
+      opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .25s,transform .25s;z-index:50;
+    }
+    .notify-pop.open{opacity:1;transform:none;pointer-events:auto;}
+    .notify-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--mist);margin-bottom:12px;}
+    .notify-row{display:flex;gap:8px;}
+    .notify-row input{
+      flex:1;min-width:0;background:rgba(8,11,15,.6);color:var(--paper);
+      border:1px solid var(--line);border-radius:10px;padding:11px 14px;
+      font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;outline:none;transition:border-color .25s,box-shadow .25s;
+    }
+    .notify-row input::placeholder{color:var(--dim);}
+    .notify-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,178,255,.16);}
+    .notify-row button{
+      flex:none;border:none;cursor:pointer;border-radius:10px;background:var(--accent);color:var(--ink);
+      font-family:var(--disp);font-weight:700;font-size:16px;line-height:1;padding:0 16px;
+      transition:filter .2s,transform .15s;
+    }
+    .notify-row button:hover{filter:brightness(1.08);} .notify-row button:active{transform:translateY(1px);}
+    .notify-note{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--dim);margin-top:9px;min-height:12px;}
+    .notify-note.ok{color:var(--accent-soft);}
+    @media (max-width:560px){.notify-pop{right:auto;left:50%;transform:translate(-50%,-8px);} .notify-pop.open{transform:translate(-50%,0);}}
+
+    /* hero */
+    .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;}
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:13px;
+      font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent-soft);
+      margin-bottom:24px;
+    }
+    .eyebrow .ln{width:30px;height:1px;background:linear-gradient(90deg,transparent,var(--accent));}
+    .eyebrow .ln.r{background:linear-gradient(90deg,var(--accent),transparent);}
+
+    /* headline — solid, legible, elegant */
+    .head{
+      font-family:var(--disp);font-weight:600;margin:0 0 4px;
+      font-size:clamp(54px,9.5vw,140px);line-height:.94;letter-spacing:-.02em;text-transform:uppercase;
+      color:var(--paper);
+      text-shadow:0 2px 4px rgba(0,0,0,.5), 0 14px 60px rgba(0,0,0,.55);
+    }
+
+    .sub{
+      font-family:var(--disp);font-weight:400;font-size:clamp(15px,1.7vw,18px);line-height:1.6;
+      color:var(--mist);max-width:46ch;margin:0 auto;text-shadow:0 2px 20px rgba(0,0,0,.7);
+    }
+
+    /* ===== password gate ===== */
+    .gate-wrap{
+      margin:30px auto 0;width:100%;max-width:430px;
+      background:linear-gradient(180deg, rgba(243,245,248,.06), rgba(243,245,248,.02));
+      border:1px solid var(--line);border-radius:16px;padding:20px 20px 16px;
+      backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+      box-shadow:0 22px 50px -20px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.05);
+    }
+    .gate-label{font-family:var(--mono);font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--mist);margin-bottom:13px;display:flex;align-items:center;gap:8px;justify-content:center;}
+    .gate-label svg{width:12px;height:12px;opacity:.85;}
+    .gate-row{display:flex;gap:8px;}
+    .gate-row input{
+      flex:1;min-width:0;background:rgba(8,11,15,.55);color:var(--paper);
+      border:1px solid var(--line);border-radius:10px;padding:12px 16px;
+      font-family:var(--mono);font-size:13px;letter-spacing:.08em;outline:none;text-align:center;
+      transition:border-color .25s,box-shadow .25s;
+    }
+    .gate-row input::placeholder{color:var(--dim);letter-spacing:.08em;}
+    .gate-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,178,255,.16);}
+    .gate-row button{
+      flex:none;border:none;cursor:pointer;border-radius:10px;background:var(--accent);color:var(--ink);
+      font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:0 22px;
+      transition:filter .2s,transform .15s;
+    }
+    .gate-row button:hover{filter:brightness(1.08);} .gate-row button:active{transform:translateY(1px);}
+    .gate-note{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);margin-top:11px;min-height:13px;}
+    .gate-note.err{color:var(--accent-soft);}
+    .shake{animation:shake .4s;}
+    @keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
+
+    /* footer line */
+    .copy{flex:none;margin-top:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);opacity:.9;text-align:center;text-shadow:0 1px 8px rgba(0,0,0,.85);}
+    .copy-link{color:var(--mist);transition:color .25s;} .copy-link:hover{color:var(--accent-soft);}
+
+    /* reveal */
+    .reveal{opacity:0;transform:translateY(16px);animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards;}
+    .r1{animation-delay:.1s;}.r2{animation-delay:.3s;}.r3{animation-delay:.5s;}.r4{animation-delay:.7s;}.r5{animation-delay:.9s;}
+    @keyframes rise{to{opacity:1;transform:none;}}
+    .knockout{opacity:0;animation:fade 1.3s ease .4s forwards;}
+    @keyframes fade{to{opacity:1;}}
+    @media (prefers-reduced-motion:reduce){.reveal,.knockout{animation:none;opacity:1;transform:none;}.wordmark .dot{animation:none;}}
+
+    @media (max-width:560px){.sub{font-size:14px;}}
+  </style>
+</head>
+<body>
+  <div class="bg">
+    <video autoplay muted loop playsinline>
+      <source src="assets/trading-floor.mp4" type="video/mp4" />
+    </video>
+  </div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="shell">
+    <header class="top">
+      <a class="wordmark reveal r1" href="index.html"><span class="dot"></span>Archer Frye</a>
+      <div class="notify reveal r1">
+        <button class="pill" id="notifyBtn" type="button" aria-expanded="false">Notify me</button>
+        <div class="notify-pop" id="notifyPop">
+          <form id="notifyForm" novalidate>
+            <div class="notify-label">Be the first to hear it</div>
+            <div class="notify-row">
+              <input type="email" id="nemail" placeholder="your@email.com" aria-label="Email address" autocomplete="email" />
+              <button type="submit" aria-label="Submit">→</button>
+            </div>
+            <div class="notify-note" id="nnote" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </header>
+
+    <main class="hero">
+      <div class="eyebrow reveal r2"><span class="ln"></span>From the Trading Floor<span class="ln r"></span></div>
+
+      <h1 class="head reveal r2">A Voice<br/>for the<br/>Voiceless</h1>
+
+      <p class="sub reveal r3">After a career on Wall Street, Archer Frye is answering a different calling — new songs written to raise awareness, and to give back.</p>
+
+      <form class="gate-wrap reveal r4" id="gate" novalidate>
+        <div class="gate-label">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+          Private listening room
+        </div>
+        <div class="gate-row">
+          <input type="password" id="pw" placeholder="Password" aria-label="Access code" autocomplete="off" />
+          <button type="submit">Enter</button>
+        </div>
+        <div class="gate-note" id="gateNote" role="status" aria-live="polite">For label &amp; industry review</div>
+      </form>
+    </main>
+
+    <div class="copy reveal r5">© Archer Frye 2026 · <a class="copy-link" href="https://www.lincolnsquaremusic.nyc" target="_blank" rel="noreferrer">Lincoln Square Music LLC</a></div>
+  </div>
+
+  <script>
+    // ===== notify-me popover =====
+    (function(){
+      var btn = document.getElementById('notifyBtn');
+      var pop = document.getElementById('notifyPop');
+      var form = document.getElementById('notifyForm');
+      var input = document.getElementById('nemail');
+      var note = document.getElementById('nnote');
+      btn.addEventListener('click', function(e){
+        e.stopPropagation();
+        var open = pop.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if(open){ setTimeout(function(){ input.focus(); }, 60); }
+      });
+      // close on outside click / escape
+      document.addEventListener('click', function(e){
+        if(pop.classList.contains('open') && !pop.contains(e.target) && e.target !== btn){
+          pop.classList.remove('open'); btn.setAttribute('aria-expanded','false');
+        }
+      });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape'){ pop.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
+      });
+      var SUBSCRIBE_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxTzgiP1r0wo6X0x6y84l7AXM_HrOqLf6I5osL_QwGCyzm5mMiDZMe04p1Qsxa26_ZI/exec';
+      form.addEventListener('submit', function(e){
+        e.preventDefault();
+        var v = (input.value || '').trim();
+        if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){
+          note.className = 'notify-note'; note.textContent = 'Enter a valid email address.'; input.focus(); return;
+        }
+        // local backup
+        try{
+          var list = JSON.parse(localStorage.getItem('af_subscribers') || '[]');
+          if(list.indexOf(v) === -1){ list.push(v); localStorage.setItem('af_subscribers', JSON.stringify(list)); }
+        }catch(err){}
+        note.className = 'notify-note'; note.textContent = 'Adding you…';
+        fetch(SUBSCRIBE_ENDPOINT, {
+          method: 'POST', mode: 'no-cors',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+          body: new URLSearchParams({ email: v })
+        }).then(function(){
+          note.className = 'notify-note ok'; note.textContent = 'You’re on the list — we’ll be in touch.'; input.value = '';
+        }).catch(function(){
+          note.className = 'notify-note ok'; note.textContent = 'You’re on the list — we’ll be in touch.'; input.value = '';
+        });
+      });
+    })();
+
+    // ===== listening room gate =====
+    (function(){
+      var ACCESS_CODE = 'AF2026';
+      var gate = document.getElementById('gate');
+      var pw = document.getElementById('pw');
+      var note = document.getElementById('gateNote');
+      gate.addEventListener('submit', function(e){
+        e.preventDefault();
+        var v = (pw.value || '').trim();
+        if(v === ACCESS_CODE){
+          try{ sessionStorage.setItem('af_access','granted'); }catch(err){}
+          note.className = 'gate-note';
+          note.textContent = 'Unlocked — opening the listening room…';
+          window.location.href = 'listening-room.html';
+        }else{
+          note.className = 'gate-note err';
+          note.textContent = 'That code isn’t right — contact the label.';
+          gate.classList.add('shake'); pw.value=''; pw.focus();
+          setTimeout(function(){ gate.classList.remove('shake'); }, 420);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

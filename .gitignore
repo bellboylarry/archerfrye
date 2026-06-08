@@ -1,0 +1,19 @@
+# OS / editor
+.DS_Store
+.claude/
+
+# Local working files — not for the public site
+Archer Frye - Experimental.html
+Archer Frye - Listening Room (standalone).html
+Archer Frye - Coming Soon (standalone).html
+Archer Frye - Coming Soon (backup).html
+coming-soon.html
+
+# Personal photos (do not publish)
+Photos/
+
+# Unused / heavy source media
+assets/Wan_Video_Generate_*.mp4
+assets/*.jpg
+assets/coming-soon-page-web-design-inspiration-*.jpg
+assets/istockphoto-*.jpg
