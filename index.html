@@ -9,14 +9,14 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&display=swap" />
   <style>
     :root{
-      --ink:#0b0e13;
-      --paper:#f3f5f8;
-      --dim:#94a0b0;
-      --mist:#c6d0dc;
-      --accent:#7fb2ff;        /* modern electric ice-blue */
-      --accent-soft:#a9cbff;
-      --line:rgba(243,245,248,.16);
-      --line-2:rgba(243,245,248,.07);
+      --ink:#14110c;
+      --paper:#f4efe6;
+      --dim:#a89a86;
+      --mist:#ddd2c2;
+      --accent:#e8a24a;        /* modern electric ice-blue */
+      --accent-soft:#f3bd75;
+      --line:rgba(244,239,230,.16);
+      --line-2:rgba(244,239,230,.07);
       --disp:'Bricolage Grotesque',system-ui,sans-serif;
       --mono:'IBM Plex Mono',ui-monospace,monospace;
     }
@@ -29,19 +29,19 @@
     a{color:inherit;text-decoration:none;}
 
     /* ===== video background ===== */
-    .bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#05070a;}
+    .bg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#0d0a06;}
     .bg video{
       position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;
       width:auto;height:auto;transform:translate(-50%,-50%);object-fit:cover;
-      filter:saturate(1.02) contrast(1.04) brightness(1.62);
+      filter:saturate(1.34) contrast(1.03) brightness(1.5) sepia(.24) hue-rotate(-12deg);
     }
     /* cool tonal grade for legibility around the knockout */
     .bg::after{
       content:'';position:absolute;inset:0;
       background:
-        radial-gradient(58% 48% at 50% 46%, rgba(8,10,15,.62), transparent 72%),
-        linear-gradient(180deg, rgba(11,14,19,.5) 0%, rgba(11,14,19,.16) 24%, rgba(11,14,19,.3) 58%, rgba(11,14,19,.78) 82%, rgba(11,14,19,.96) 100%),
-        radial-gradient(70% 55% at 50% 44%, rgba(127,178,255,.1), transparent 60%);
+        radial-gradient(62% 52% at 50% 40%, rgba(232,162,74,.18), transparent 62%),
+        radial-gradient(55% 46% at 50% 47%, rgba(18,13,7,.48), transparent 74%),
+        linear-gradient(180deg, rgba(20,16,10,.46) 0%, rgba(20,16,10,.1) 26%, rgba(20,16,10,.26) 60%, rgba(20,16,10,.72) 82%, rgba(20,16,10,.95) 100%);
     }
     .grain{
       position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.4;mix-blend-mode:overlay;
@@ -76,7 +76,7 @@
     .notify{position:relative;}
     .notify-pop{
       position:absolute;top:calc(100% + 12px);right:0;width:310px;max-width:78vw;
-      background:linear-gradient(180deg, rgba(243,245,248,.08), rgba(243,245,248,.03));
+      background:linear-gradient(180deg, rgba(244,239,230,.08), rgba(244,239,230,.03));
       border:1px solid var(--line);border-radius:14px;padding:16px 16px 13px;
       backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
       box-shadow:0 26px 60px -20px rgba(0,0,0,.75), inset 0 1px 0 rgba(255,255,255,.05);
@@ -91,7 +91,7 @@
       font-family:var(--mono);font-size:12.5px;letter-spacing:.02em;outline:none;transition:border-color .25s,box-shadow .25s;
     }
     .notify-row input::placeholder{color:var(--dim);}
-    .notify-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,178,255,.16);}
+    .notify-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,162,74,.16);}
     .notify-row button{
       flex:none;border:none;cursor:pointer;border-radius:10px;background:var(--accent);color:var(--ink);
       font-family:var(--disp);font-weight:700;font-size:16px;line-height:1;padding:0 16px;
@@ -101,6 +101,46 @@
     .notify-note{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--dim);margin-top:9px;min-height:12px;}
     .notify-note.ok{color:var(--accent-soft);}
     @media (max-width:560px){.notify-pop{right:auto;left:50%;transform:translate(-50%,-8px);} .notify-pop.open{transform:translate(-50%,0);}}
+
+    /* top-right meta */
+    .topmeta{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim);}
+    @media (max-width:560px){.topmeta{display:none;}}
+
+    /* ===== bottom actions (side by side) ===== */
+    .actions{
+      display:flex;align-items:flex-start;justify-content:center;gap:30px;
+      width:100%;max-width:720px;margin:0 auto;flex:none;
+    }
+    .act{flex:1;min-width:0;max-width:320px;text-align:left;}
+    .act__label{
+      font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;
+      color:var(--mist);margin-bottom:11px;text-shadow:0 1px 8px rgba(0,0,0,.7);
+    }
+    .act__row{display:flex;gap:8px;}
+    .act__row input{
+      flex:1;min-width:0;background:rgba(13,10,6,.6);color:var(--paper);
+      border:1px solid var(--line);border-radius:10px;padding:12px 15px;
+      font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;outline:none;
+      backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+      transition:border-color .25s,box-shadow .25s;
+    }
+    .act__row input::placeholder{color:var(--dim);}
+    .act__row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,162,74,.16);}
+    .act__row button{
+      flex:none;border:none;cursor:pointer;border-radius:10px;background:var(--accent);color:var(--ink);
+      font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.14em;text-transform:uppercase;padding:0 18px;
+      transition:filter .2s,transform .15s;
+    }
+    .act__row button:hover{filter:brightness(1.08);} .act__row button:active{transform:translateY(1px);}
+    .act__note{font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--dim);margin-top:9px;min-height:13px;text-shadow:0 1px 8px rgba(0,0,0,.7);}
+    .act__note.ok{color:var(--accent-soft);} .act__note.err{color:var(--accent-soft);}
+    .act__divider{flex:none;align-self:stretch;width:1px;background:var(--line);margin-top:24px;}
+    .actions.shake{animation:shake .4s;}
+    @media (max-width:620px){
+      .actions{flex-direction:column;gap:22px;align-items:center;}
+      .act{max-width:340px;width:100%;}
+      .act__divider{display:none;}
+    }
 
     /* hero */
     .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;}
@@ -128,7 +168,7 @@
     /* ===== password gate ===== */
     .gate-wrap{
       margin:30px auto 0;width:100%;max-width:430px;
-      background:linear-gradient(180deg, rgba(243,245,248,.06), rgba(243,245,248,.02));
+      background:linear-gradient(180deg, rgba(244,239,230,.06), rgba(244,239,230,.02));
       border:1px solid var(--line);border-radius:16px;padding:20px 20px 16px;
       backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
       box-shadow:0 22px 50px -20px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.05);
@@ -143,7 +183,7 @@
       transition:border-color .25s,box-shadow .25s;
     }
     .gate-row input::placeholder{color:var(--dim);letter-spacing:.08em;}
-    .gate-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(127,178,255,.16);}
+    .gate-row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,162,74,.16);}
     .gate-row button{
       flex:none;border:none;cursor:pointer;border-radius:10px;background:var(--accent);color:var(--ink);
       font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:0 22px;
@@ -181,19 +221,7 @@
   <div class="shell">
     <header class="top">
       <a class="wordmark reveal r1" href="index.html"><span class="dot"></span>Archer Frye</a>
-      <div class="notify reveal r1">
-        <button class="pill" id="notifyBtn" type="button" aria-expanded="false">Notify me</button>
-        <div class="notify-pop" id="notifyPop">
-          <form id="notifyForm" novalidate>
-            <div class="notify-label">Be the first to hear it</div>
-            <div class="notify-row">
-              <input type="email" id="nemail" placeholder="your@email.com" aria-label="Email address" autocomplete="email" />
-              <button type="submit" aria-label="Submit">→</button>
-            </div>
-            <div class="notify-note" id="nnote" role="status" aria-live="polite"></div>
-          </form>
-        </div>
-      </div>
+      <div class="topmeta reveal r1">New Record · MMXXVI</div>
     </header>
 
     <main class="hero">
@@ -202,67 +230,60 @@
       <h1 class="head reveal r2">A Voice<br/>for the<br/>Voiceless</h1>
 
       <p class="sub reveal r3">After a career on Wall Street, Archer Frye is answering a different calling — new songs written to raise awareness, and to give back.</p>
+    </main>
 
-      <form class="gate-wrap reveal r4" id="gate" novalidate>
-        <div class="gate-label">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-          Private listening room
+    <div class="actions reveal r4">
+      <form class="act" id="notifyForm" novalidate>
+        <div class="act__label">Keep me Posted</div>
+        <div class="act__row">
+          <input type="email" id="nemail" placeholder="your@email.com" aria-label="Email address" autocomplete="email" />
+          <button type="submit" aria-label="Subscribe">→</button>
         </div>
-        <div class="gate-row">
+        <div class="act__note" id="nnote" role="status" aria-live="polite"></div>
+      </form>
+
+      <div class="act__divider" aria-hidden="true"></div>
+
+      <form class="act" id="gate" novalidate>
+        <div class="act__label">Private Listening</div>
+        <div class="act__row">
           <input type="password" id="pw" placeholder="Password" aria-label="Access code" autocomplete="off" />
           <button type="submit">Enter</button>
         </div>
-        <div class="gate-note" id="gateNote" role="status" aria-live="polite">For label &amp; industry review</div>
+        <div class="act__note" id="gateNote" role="status" aria-live="polite">For label &amp; industry review</div>
       </form>
-    </main>
+    </div>
 
     <div class="copy reveal r5">© Archer Frye 2026 · <a class="copy-link" href="https://www.lincolnsquaremusic.nyc" target="_blank" rel="noreferrer">Lincoln Square Music LLC</a></div>
   </div>
 
   <script>
-    // ===== notify-me popover =====
+    // ===== keep me posted =====
     (function(){
-      var btn = document.getElementById('notifyBtn');
-      var pop = document.getElementById('notifyPop');
       var form = document.getElementById('notifyForm');
       var input = document.getElementById('nemail');
       var note = document.getElementById('nnote');
-      btn.addEventListener('click', function(e){
-        e.stopPropagation();
-        var open = pop.classList.toggle('open');
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        if(open){ setTimeout(function(){ input.focus(); }, 60); }
-      });
-      // close on outside click / escape
-      document.addEventListener('click', function(e){
-        if(pop.classList.contains('open') && !pop.contains(e.target) && e.target !== btn){
-          pop.classList.remove('open'); btn.setAttribute('aria-expanded','false');
-        }
-      });
-      document.addEventListener('keydown', function(e){
-        if(e.key === 'Escape'){ pop.classList.remove('open'); btn.setAttribute('aria-expanded','false'); }
-      });
       var SUBSCRIBE_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxTzgiP1r0wo6X0x6y84l7AXM_HrOqLf6I5osL_QwGCyzm5mMiDZMe04p1Qsxa26_ZI/exec';
       form.addEventListener('submit', function(e){
         e.preventDefault();
         var v = (input.value || '').trim();
         if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){
-          note.className = 'notify-note'; note.textContent = 'Enter a valid email address.'; input.focus(); return;
+          note.className = 'act__note'; note.textContent = 'Enter a valid email address.'; input.focus(); return;
         }
         // local backup
         try{
           var list = JSON.parse(localStorage.getItem('af_subscribers') || '[]');
           if(list.indexOf(v) === -1){ list.push(v); localStorage.setItem('af_subscribers', JSON.stringify(list)); }
         }catch(err){}
-        note.className = 'notify-note'; note.textContent = 'Adding you…';
+        note.className = 'act__note'; note.textContent = 'Adding you…';
         fetch(SUBSCRIBE_ENDPOINT, {
           method: 'POST', mode: 'no-cors',
           headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
           body: new URLSearchParams({ email: v })
         }).then(function(){
-          note.className = 'notify-note ok'; note.textContent = 'You’re on the list — we’ll be in touch.'; input.value = '';
+          note.className = 'act__note ok'; note.textContent = 'You’re on the list — we’ll be in touch.'; input.value = '';
         }).catch(function(){
-          note.className = 'notify-note ok'; note.textContent = 'You’re on the list — we’ll be in touch.'; input.value = '';
+          note.className = 'act__note ok'; note.textContent = 'You’re on the list — we’ll be in touch.'; input.value = '';
         });
       });
     })();
@@ -278,11 +299,11 @@
         var v = (pw.value || '').trim();
         if(v === ACCESS_CODE){
           try{ sessionStorage.setItem('af_access','granted'); }catch(err){}
-          note.className = 'gate-note';
+          note.className = 'act__note';
           note.textContent = 'Unlocked — opening the listening room…';
           window.location.href = 'listening-room.html';
         }else{
-          note.className = 'gate-note err';
+          note.className = 'act__note err';
           note.textContent = 'That code isn’t right — contact the label.';
           gate.classList.add('shake'); pw.value=''; pw.focus();
           setTimeout(function(){ gate.classList.remove('shake'); }, 420);
