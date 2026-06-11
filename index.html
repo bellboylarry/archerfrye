@@ -13,8 +13,8 @@
       --paper:#f4efe6;
       --dim:#a89a86;
       --mist:#ddd2c2;
-      --accent:#e8a24a;        /* modern electric ice-blue */
-      --accent-soft:#f3bd75;
+      --accent:#dcd7cd;        /* soft light gray — highlights & buttons */
+      --accent-soft:#ece8e0;
       --line:rgba(244,239,230,.16);
       --line-2:rgba(244,239,230,.07);
       --disp:'Familjen Grotesk',system-ui,sans-serif;
@@ -33,15 +33,15 @@
     .bg video{
       position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;
       width:auto;height:auto;transform:translate(-50%,-50%);object-fit:cover;
-      filter:saturate(1.32) contrast(1.02) brightness(1.72) sepia(.2) hue-rotate(-10deg);
+      filter:saturate(1.18) contrast(1.02) brightness(1.92) sepia(.1) hue-rotate(-8deg);
     }
-    /* cool tonal grade for legibility around the knockout */
+    /* tonal grade for legibility around the text */
     .bg::after{
       content:'';position:absolute;inset:0;
       background:
-        radial-gradient(64% 54% at 50% 38%, rgba(232,162,74,.2), transparent 64%),
-        radial-gradient(56% 48% at 50% 46%, rgba(18,13,7,.34), transparent 76%),
-        linear-gradient(180deg, rgba(20,16,10,.36) 0%, rgba(20,16,10,.06) 28%, rgba(20,16,10,.18) 60%, rgba(20,16,10,.6) 84%, rgba(20,16,10,.9) 100%);
+        radial-gradient(64% 54% at 50% 38%, rgba(244,239,230,.12), transparent 64%),
+        radial-gradient(56% 48% at 50% 46%, rgba(18,15,10,.24), transparent 76%),
+        linear-gradient(180deg, rgba(22,18,13,.3) 0%, rgba(22,18,13,.04) 28%, rgba(22,18,13,.14) 60%, rgba(22,18,13,.52) 84%, rgba(22,18,13,.82) 100%);
     }
     .grain{
       position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.4;mix-blend-mode:overlay;
@@ -114,10 +114,10 @@
       transition:border-color .25s,box-shadow .25s;
     }
     .act__row input::placeholder{color:var(--dim);}
-    .act__row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,162,74,.16);}
+    .act__row input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(220,215,205,.18);}
     .act__row button{
       flex:none;border:none;cursor:pointer;border-radius:12px;background:var(--accent);color:var(--ink);
-      font-family:var(--mono);font-weight:500;font-size:13.5px;letter-spacing:.14em;text-transform:uppercase;padding:0 24px;
+      font-family:var(--mono);font-weight:500;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;padding:0 22px;min-width:108px;
       transition:filter .2s,transform .15s;
     }
     .act__row button:hover{filter:brightness(1.08);} .act__row button:active{transform:translateY(1px);}
@@ -132,7 +132,7 @@
     }
 
     /* hero */
-    .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;transform:translateY(-44px);}
+    .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;transform:translateY(6px);}
     .eyebrow{
       display:inline-flex;align-items:center;gap:13px;
       font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent-soft);
@@ -152,7 +152,7 @@
     /* EP announcement — title + status on one line */
     .ep{
       font-family:var(--disp);font-weight:500;font-size:clamp(22px,3.2vw,37px);
-      letter-spacing:-.01em;color:var(--paper);margin:20px 0 0;white-space:nowrap;
+      letter-spacing:-.01em;color:var(--paper);margin:30px 0 0;white-space:nowrap;
       text-shadow:0 2px 18px rgba(0,0,0,.6);
     }
     .ep__meta{
@@ -175,7 +175,7 @@
       font-family:var(--mono);font-size:.6em;font-weight:500;color:var(--accent-soft);
       min-width:1.7em;letter-spacing:.06em;
     }
-    .tracklist li.bonus{margin-top:7px;font-weight:400;color:var(--mist);}
+    .tracklist li.bonus{display:block;margin-top:7px;font-weight:400;color:var(--paper);}
     .tracklist li.bonus::before{display:none;}
     .tracklist li.bonus em{font-style:italic;color:var(--accent-soft);font-weight:500;}
     @media (max-width:520px){.head{white-space:normal;} .ep{white-space:normal;}}
@@ -246,7 +246,7 @@
         <li>[Pls forgive me for being] So Late</li>
         <li>Peace &amp; Luv from the NYC</li>
         <li>Luxury of Life</li>
-        <li class="bonus"><em>Bonus</em> Chismosos</li>
+        <li class="bonus"><em>Bonus Track</em>: Chismosos</li>
       </ul>
     </main>
 
@@ -255,7 +255,7 @@
         <div class="act__label">Keep me Posted</div>
         <div class="act__row">
           <input type="email" id="nemail" placeholder="your@email.com" aria-label="Email address" autocomplete="email" />
-          <button type="submit">Enter</button>
+          <button type="submit">Submit</button>
         </div>
         <div class="act__note" id="nnote" role="status" aria-live="polite"></div>
       </form>
