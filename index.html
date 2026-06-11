@@ -60,18 +60,6 @@
     /* ===== shell ===== */
     .shell{position:relative;z-index:10;height:100vh;display:flex;flex-direction:column;padding:30px clamp(26px,5vw,68px) 34px;}
 
-    /* top bar */
-    .top{display:flex;align-items:center;justify-content:space-between;}
-    .wordmark{display:inline-flex;align-items:center;gap:11px;font-family:var(--mono);font-weight:500;font-size:13px;letter-spacing:.3em;text-transform:uppercase;color:var(--paper);}
-    .wordmark .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);animation:pulse 2.4s ease-in-out infinite;}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.7);}}
-    .pill{
-      font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
-      background:var(--accent);padding:11px 20px;border-radius:999px;font-weight:500;
-      transition:filter .2s,transform .15s;
-    }
-    .pill:hover{filter:brightness(1.08);} .pill:active{transform:translateY(1px);}
-    .top .pill{margin-left:auto;}
 
     /* notify popover */
     .notify{position:relative;}
@@ -144,7 +132,7 @@
     }
 
     /* hero */
-    .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;}
+    .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;transform:translateY(-44px);}
     .eyebrow{
       display:inline-flex;align-items:center;gap:13px;
       font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent-soft);
@@ -163,7 +151,7 @@
 
     /* EP announcement — title + status on one line */
     .ep{
-      font-family:var(--disp);font-weight:500;font-size:clamp(20px,3vw,34px);
+      font-family:var(--disp);font-weight:500;font-size:clamp(22px,3.2vw,37px);
       letter-spacing:-.01em;color:var(--paper);margin:20px 0 0;white-space:nowrap;
       text-shadow:0 2px 18px rgba(0,0,0,.6);
     }
@@ -178,7 +166,7 @@
       display:flex;flex-direction:column;gap:11px;text-align:left;counter-reset:trk;
     }
     .tracklist li{
-      font-family:var(--disp);font-weight:500;font-size:clamp(16px,2vw,21px);line-height:1.2;
+      font-family:var(--disp);font-weight:500;font-size:clamp(17px,2.15vw,23px);line-height:1.2;
       color:var(--paper);text-shadow:0 2px 16px rgba(0,0,0,.8);
       display:flex;align-items:baseline;gap:15px;
     }
@@ -187,7 +175,7 @@
       font-family:var(--mono);font-size:.6em;font-weight:500;color:var(--accent-soft);
       min-width:1.7em;letter-spacing:.06em;
     }
-    .tracklist li.bonus{margin-top:7px;font-weight:400;font-size:clamp(15px,1.85vw,19px);color:var(--mist);}
+    .tracklist li.bonus{margin-top:7px;font-weight:400;color:var(--mist);}
     .tracklist li.bonus::before{display:none;}
     .tracklist li.bonus em{font-style:italic;color:var(--accent-soft);font-weight:500;}
     @media (max-width:520px){.head{white-space:normal;} .ep{white-space:normal;}}
@@ -226,49 +214,6 @@
     .copy{flex:none;margin-top:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);opacity:.9;text-align:center;text-shadow:0 1px 8px rgba(0,0,0,.85);}
     .copy-link{color:var(--mist);transition:color .25s;} .copy-link:hover{color:var(--accent-soft);}
 
-    /* ===== Contact Us modal ===== */
-    .modal-overlay{
-      position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:24px;
-      background:rgba(8,6,3,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
-      opacity:0;pointer-events:none;transition:opacity .3s;
-    }
-    .modal-overlay.open{opacity:1;pointer-events:auto;}
-    .modal{
-      position:relative;width:100%;max-width:440px;
-      background:linear-gradient(180deg, rgba(244,239,230,.08), rgba(244,239,230,.03));
-      border:1px solid var(--line);border-radius:18px;padding:30px clamp(22px,4vw,34px) 26px;
-      backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-      box-shadow:0 30px 80px -24px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.06);
-      transform:translateY(14px) scale(.98);transition:transform .3s cubic-bezier(.2,.8,.2,1);
-    }
-    .modal-overlay.open .modal{transform:none;}
-    .modal__close{
-      position:absolute;top:14px;right:14px;width:30px;height:30px;border:none;cursor:pointer;
-      background:rgba(244,239,230,.06);border-radius:8px;color:var(--mist);font-size:13px;line-height:1;
-      transition:background .2s,color .2s;
-    }
-    .modal__close:hover{background:rgba(244,239,230,.12);color:var(--paper);}
-    .modal__eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--accent-soft);}
-    .modal h2{font-family:var(--disp);font-weight:600;font-size:27px;letter-spacing:-.01em;margin:8px 0 7px;color:var(--paper);}
-    .modal p{margin:0 0 20px;color:var(--dim);font-size:13.5px;line-height:1.55;}
-    .field{margin-bottom:12px;}
-    .field label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);margin-bottom:7px;}
-    .field input,.field textarea{
-      width:100%;background:rgba(13,10,6,.6);color:var(--paper);border:1px solid var(--line);border-radius:11px;
-      padding:13px 15px;font-family:var(--disp);font-size:14.5px;outline:none;resize:vertical;
-      transition:border-color .25s,box-shadow .25s;
-    }
-    .field textarea{min-height:104px;line-height:1.5;}
-    .field input::placeholder,.field textarea::placeholder{color:var(--dim);}
-    .field input:focus,.field textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(232,162,74,.16);}
-    .modal__send{
-      width:100%;margin-top:6px;border:none;cursor:pointer;border-radius:11px;background:var(--accent);color:var(--ink);
-      font-family:var(--disp);font-weight:600;font-size:15px;padding:14px;transition:filter .2s,transform .15s;
-    }
-    .modal__send:hover{filter:brightness(1.08);} .modal__send:active{transform:translateY(1px);}
-    .modal__note{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--dim);margin-top:12px;min-height:14px;text-align:center;}
-    .modal__note.ok{color:var(--accent-soft);}
-
     /* reveal */
     .reveal{opacity:0;transform:translateY(16px);animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards;}
     .r1{animation-delay:.1s;}.r2{animation-delay:.3s;}.r3{animation-delay:.5s;}.r4{animation-delay:.7s;}.r5{animation-delay:.9s;}
@@ -289,10 +234,6 @@
   <div class="grain" aria-hidden="true"></div>
 
   <div class="shell">
-    <header class="top reveal r1">
-      <button class="pill" id="contactBtn" type="button">Contact Us</button>
-    </header>
-
     <main class="hero">
       <div class="eyebrow reveal r2"><span class="ln"></span>New EP<span class="ln r"></span></div>
 
@@ -314,7 +255,7 @@
         <div class="act__label">Keep me Posted</div>
         <div class="act__row">
           <input type="email" id="nemail" placeholder="your@email.com" aria-label="Email address" autocomplete="email" />
-          <button type="submit" aria-label="Subscribe">→</button>
+          <button type="submit">Enter</button>
         </div>
         <div class="act__note" id="nnote" role="status" aria-live="polite"></div>
       </form>
@@ -332,32 +273,6 @@
     </div>
 
     <div class="copy reveal r5">©Archer Frye 2026 · <a class="copy-link" href="https://www.lincolnsquaremusic.nyc" target="_blank" rel="noreferrer">Lincoln Square Music LLC</a></div>
-  </div>
-
-  <!-- ===== Contact Us modal ===== -->
-  <div class="modal-overlay" id="contactOverlay" role="dialog" aria-modal="true" aria-labelledby="contactTitle">
-    <div class="modal">
-      <button class="modal__close" id="contactClose" type="button" aria-label="Close">&#10005;</button>
-      <div class="modal__eyebrow">Get in touch</div>
-      <h2 id="contactTitle">Contact Us</h2>
-      <p>Press, partnership, or just want to say hello — leave a note and we’ll get back to you.</p>
-      <form id="contactForm" novalidate>
-        <div class="field">
-          <label for="cname">Name</label>
-          <input id="cname" type="text" placeholder="Your name" autocomplete="name" />
-        </div>
-        <div class="field">
-          <label for="cemail">Email</label>
-          <input id="cemail" type="email" placeholder="you@email.com" autocomplete="email" />
-        </div>
-        <div class="field">
-          <label for="cmsg">Message</label>
-          <textarea id="cmsg" placeholder="How can we help?"></textarea>
-        </div>
-        <button class="modal__send" type="submit">Send message</button>
-        <div class="modal__note" id="cnote" role="status" aria-live="polite"></div>
-      </form>
-    </div>
   </div>
 
   <script>
@@ -414,48 +329,6 @@
       });
     })();
 
-    // ===== contact us modal =====
-    (function(){
-      var CONTACT_ENDPOINT = ''; // ← set to a Google Apps Script web app URL to receive messages
-      var btn = document.getElementById('contactBtn');
-      var overlay = document.getElementById('contactOverlay');
-      var closeBtn = document.getElementById('contactClose');
-      var form = document.getElementById('contactForm');
-      var name = document.getElementById('cname');
-      var email = document.getElementById('cemail');
-      var msg = document.getElementById('cmsg');
-      var note = document.getElementById('cnote');
-      function open(){ overlay.classList.add('open'); setTimeout(function(){ name.focus(); }, 80); }
-      function close(){ overlay.classList.remove('open'); }
-      btn.addEventListener('click', open);
-      closeBtn.addEventListener('click', close);
-      overlay.addEventListener('click', function(e){ if(e.target === overlay) close(); });
-      document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && overlay.classList.contains('open')) close(); });
-      form.addEventListener('submit', function(e){
-        e.preventDefault();
-        var n = (name.value || '').trim(), em = (email.value || '').trim(), m = (msg.value || '').trim();
-        if(!n || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em) || !m){
-          note.className = 'modal__note'; note.textContent = 'Please add your name, a valid email, and a message.'; return;
-        }
-        // local backup
-        try{
-          var l = JSON.parse(localStorage.getItem('af_contact') || '[]');
-          l.push({ name:n, email:em, message:m, at:Date.now() }); localStorage.setItem('af_contact', JSON.stringify(l));
-        }catch(err){}
-        function done(){
-          note.className = 'modal__note ok'; note.textContent = 'Thank you — your message has been received.';
-          name.value = email.value = msg.value = '';
-          setTimeout(close, 1500);
-        }
-        note.className = 'modal__note'; note.textContent = 'Sending…';
-        if(!CONTACT_ENDPOINT){ done(); return; }
-        fetch(CONTACT_ENDPOINT, {
-          method: 'POST', mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: new URLSearchParams({ name:n, email:em, message:m })
-        }).then(done).catch(done);
-      });
-    })();
   </script>
 </body>
 </html>
