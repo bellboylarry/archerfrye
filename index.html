@@ -33,15 +33,15 @@
     .bg video{
       position:absolute;top:50%;left:50%;min-width:100%;min-height:100%;
       width:auto;height:auto;transform:translate(-50%,-50%);object-fit:cover;
-      filter:saturate(1.34) contrast(1.03) brightness(1.5) sepia(.24) hue-rotate(-12deg);
+      filter:saturate(1.32) contrast(1.02) brightness(1.72) sepia(.2) hue-rotate(-10deg);
     }
     /* cool tonal grade for legibility around the knockout */
     .bg::after{
       content:'';position:absolute;inset:0;
       background:
-        radial-gradient(62% 52% at 50% 40%, rgba(232,162,74,.18), transparent 62%),
-        radial-gradient(55% 46% at 50% 47%, rgba(18,13,7,.48), transparent 74%),
-        linear-gradient(180deg, rgba(20,16,10,.46) 0%, rgba(20,16,10,.1) 26%, rgba(20,16,10,.26) 60%, rgba(20,16,10,.72) 82%, rgba(20,16,10,.95) 100%);
+        radial-gradient(64% 54% at 50% 38%, rgba(232,162,74,.2), transparent 64%),
+        radial-gradient(56% 48% at 50% 46%, rgba(18,13,7,.34), transparent 76%),
+        linear-gradient(180deg, rgba(20,16,10,.36) 0%, rgba(20,16,10,.06) 28%, rgba(20,16,10,.18) 60%, rgba(20,16,10,.6) 84%, rgba(20,16,10,.9) 100%);
     }
     .grain{
       position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.4;mix-blend-mode:overlay;
@@ -113,8 +113,8 @@
     }
     .act{flex:1;min-width:0;max-width:380px;text-align:left;}
     .act__label{
-      font-family:var(--mono);font-size:13px;letter-spacing:.22em;text-transform:uppercase;
-      color:var(--mist);margin-bottom:14px;text-shadow:0 1px 8px rgba(0,0,0,.7);
+      font-family:var(--mono);font-weight:500;font-size:14px;letter-spacing:.16em;text-transform:uppercase;
+      color:var(--paper);margin-bottom:14px;text-shadow:0 1px 3px rgba(0,0,0,.95), 0 2px 14px rgba(0,0,0,.9);
     }
     .act__row{display:flex;gap:10px;}
     .act__row input{
@@ -154,16 +154,42 @@
 
     /* headline — solid, legible, elegant */
     .head{
-      font-family:var(--disp);font-weight:600;margin:0 0 4px;
-      font-size:clamp(54px,9.5vw,140px);line-height:.94;letter-spacing:-.02em;text-transform:uppercase;
-      color:var(--paper);
+      font-family:var(--disp);font-weight:600;margin:0;
+      font-size:clamp(46px,10vw,128px);line-height:.94;letter-spacing:-.02em;text-transform:uppercase;
+      color:var(--paper);white-space:nowrap;
       text-shadow:0 2px 4px rgba(0,0,0,.5), 0 14px 60px rgba(0,0,0,.55);
     }
 
-    .sub{
-      font-family:var(--disp);font-weight:400;font-size:clamp(15px,1.7vw,18px);line-height:1.6;
-      color:var(--mist);max-width:46ch;margin:0 auto;text-shadow:0 2px 20px rgba(0,0,0,.7);
+    /* EP announcement — title + status on one line */
+    .ep{
+      font-family:var(--disp);font-weight:500;font-size:clamp(20px,3vw,34px);
+      letter-spacing:-.01em;color:var(--paper);margin:20px 0 0;white-space:nowrap;
+      text-shadow:0 2px 18px rgba(0,0,0,.6);
     }
+    .ep__meta{
+      font-family:var(--mono);font-size:.56em;font-weight:500;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--accent-soft);margin-left:.7em;vertical-align:middle;
+    }
+
+    /* tracklist — left-aligned album column */
+    .tracklist{
+      list-style:none;padding:0;margin:30px auto 0;width:-moz-fit-content;width:fit-content;
+      display:flex;flex-direction:column;gap:11px;text-align:left;counter-reset:trk;
+    }
+    .tracklist li{
+      font-family:var(--disp);font-weight:500;font-size:clamp(16px,2vw,21px);line-height:1.2;
+      color:var(--paper);text-shadow:0 2px 16px rgba(0,0,0,.8);
+      display:flex;align-items:baseline;gap:15px;
+    }
+    .tracklist li::before{
+      counter-increment:trk;content:counter(trk,decimal-leading-zero);
+      font-family:var(--mono);font-size:.6em;font-weight:500;color:var(--accent-soft);
+      min-width:1.7em;letter-spacing:.06em;
+    }
+    .tracklist li.bonus{margin-top:7px;font-weight:400;font-size:clamp(15px,1.85vw,19px);color:var(--mist);}
+    .tracklist li.bonus::before{display:none;}
+    .tracklist li.bonus em{font-style:italic;color:var(--accent-soft);font-weight:500;}
+    @media (max-width:520px){.head{white-space:normal;} .ep{white-space:normal;}}
 
     /* ===== password gate ===== */
     .gate-wrap{
@@ -219,16 +245,20 @@
   <div class="grain" aria-hidden="true"></div>
 
   <div class="shell">
-    <header class="top">
-      <a class="wordmark reveal r1" href="index.html"><span class="dot"></span>Archer Frye</a>
-    </header>
-
     <main class="hero">
-      <div class="eyebrow reveal r2"><span class="ln"></span>From the Trading Floor<span class="ln r"></span></div>
+      <div class="eyebrow reveal r2"><span class="ln"></span>New EP<span class="ln r"></span></div>
 
-      <h1 class="head reveal r2">A Voice<br/>for the<br/>Voiceless</h1>
+      <h1 class="head reveal r2">Archer Frye</h1>
 
-      <p class="sub reveal r3">After a career on Wall Street, Archer Frye is answering a different calling — new songs written to raise awareness, and to give back.</p>
+      <p class="ep reveal r3">Luxury of Life <span class="ep__meta">EP · Coming Soon</span></p>
+
+      <ul class="tracklist reveal r4">
+        <li>Tally Hero</li>
+        <li>[Pls forgive me for being] So Late</li>
+        <li>Peace &amp; Luv from the NYC</li>
+        <li>Luxury of Life</li>
+        <li class="bonus"><em>Bonus</em> Chismosos</li>
+      </ul>
     </main>
 
     <div class="actions reveal r4">
@@ -253,7 +283,7 @@
       </form>
     </div>
 
-    <div class="copy reveal r5">© Archer Frye 2026 · <a class="copy-link" href="https://www.lincolnsquaremusic.nyc" target="_blank" rel="noreferrer">Lincoln Square Music LLC</a></div>
+    <div class="copy reveal r5">©Archer Frye 2026 · <a class="copy-link" href="https://www.lincolnsquaremusic.nyc" target="_blank" rel="noreferrer">Lincoln Square Music LLC</a></div>
   </div>
 
   <script>
