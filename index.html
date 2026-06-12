@@ -132,7 +132,7 @@
     }
 
     /* hero */
-    .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;transform:translateY(6px);}
+    .hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;transform:translateY(-18px);}
     .eyebrow{
       display:inline-flex;align-items:center;gap:13px;
       font-family:var(--mono);font-size:12px;letter-spacing:.34em;text-transform:uppercase;color:var(--accent-soft);
@@ -211,8 +211,8 @@
     @keyframes shake{0%,100%{transform:translateX(0);}20%,60%{transform:translateX(-6px);}40%,80%{transform:translateX(6px);}}
 
     /* footer line */
-    .copy{flex:none;margin-top:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--dim);opacity:.9;text-align:center;text-shadow:0 1px 8px rgba(0,0,0,.85);}
-    .copy-link{color:var(--mist);transition:color .25s;} .copy-link:hover{color:var(--accent-soft);}
+    .copy{flex:none;margin-top:18px;font-family:var(--mono);font-size:10.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--mist);opacity:1;text-align:center;text-shadow:0 1px 8px rgba(0,0,0,.95);}
+    .copy-link{color:var(--paper);transition:color .25s;} .copy-link:hover{color:var(--accent-soft);}
 
     /* reveal */
     .reveal{opacity:0;transform:translateY(16px);animation:rise 1s cubic-bezier(.2,.8,.2,1) forwards;}
@@ -266,9 +266,9 @@
         <div class="act__label">Private Listening</div>
         <div class="act__row">
           <input type="password" id="pw" placeholder="Password" aria-label="Access code" autocomplete="off" />
-          <button type="submit">Enter</button>
+          <button type="submit">Submit</button>
         </div>
-        <div class="act__note" id="gateNote" role="status" aria-live="polite">For label &amp; industry review</div>
+        <div class="act__note" id="gateNote" role="status" aria-live="polite"></div>
       </form>
     </div>
 
